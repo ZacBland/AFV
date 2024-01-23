@@ -24,7 +24,9 @@ from shapely.geometry import Polygon
 import simplekml
 
 # BE SURE TO ADD 'maps' FOLDER IN YOUR C DRIVE
-directory = 'C:/maps'
+directory = './maps'
+if not os.path.exists(directory):
+    os.makedirs(directory)
 os.chdir(directory)
 
 # =============================================================================
@@ -97,7 +99,7 @@ coords_4 = [[0 for x in range(n)] for x in range(n)]
 imgs = [[0 for x in range(n)] for x in range(n)]
 columns = [0 for x in range(n)]
 quad = [0 for x in range(4)]
-        
+key = os.environ.get('MAP')
 
 # =============================================================================
 # ----- QUADRENT FUNCTIONS ----------------------------------------------------
@@ -109,12 +111,10 @@ def quad_1(coords_list : list):
         # Columns 
         for j in range(n):
             coords_1[i][j] = [(coords_list[0] + vert*i), (coords_list[1] + horiz*j)]
-            
-            urllib.request.urlretrieve(
-           "https://maps.googleapis.com/maps/api/staticmap?center=" + 
-           str(coords_1[i][j][0]) + "," + str(coords_1[i][j][1]) + 
-           "&zoom=18&size=640x640&maptype=satellite&key=AIzaSyDSXw-4ejrlAndN62JoOmyRy4-7x9RwodE",
-           "map" + str(i) + str(j) + ".jpg") 
+            print(coords_1[i][j])
+            url = "https://maps.googleapis.com/maps/api/staticmap?center=" + str(coords_1[i][j][0]) + "," + str(coords_1[i][j][1]) + "&zoom=18&size=640x640&maptype=satellite&key="+str(key),"map" + str(i) + str(j) + ".jpg"
+            print(url)
+            urllib.request.urlretrieve("https://maps.googleapis.com/maps/api/staticmap?center=" + str(coords_1[i][j][0]) + "," + str(coords_1[i][j][1]) + "&zoom=18&size=640x640&maptype=satellite&key="+str(key),"map" + str(i) + str(j) + ".jpg") 
 
     for i in range(n):
         # Vertically concat columns
@@ -150,7 +150,7 @@ def quad_2(coords_list : list):
             urllib.request.urlretrieve(
            "https://maps.googleapis.com/maps/api/staticmap?center=" + 
            str(coords_1[i][j][0]) + "," + str(coords_1[i][j][1]) + 
-           "&zoom=18&size=640x640&maptype=satellite&key=AIzaSyDSXw-4ejrlAndN62JoOmyRy4-7x9RwodE",
+           "&zoom=18&size=640x640&maptype=satellite&key="+str(key),
            "map" + str(i) + str(j) + ".jpg") 
 
     for i in range(n):
@@ -187,7 +187,7 @@ def quad_3(coords_list : list):
             urllib.request.urlretrieve(
            "https://maps.googleapis.com/maps/api/staticmap?center=" + 
            str(coords_1[i][j][0]) + "," + str(coords_1[i][j][1]) + 
-           "&zoom=18&size=640x640&maptype=satellite&key=AIzaSyDSXw-4ejrlAndN62JoOmyRy4-7x9RwodE",
+           "&zoom=18&size=640x640&maptype=satellite&key="+str(key),
            "map" + str(i) + str(j) + ".jpg") 
 
     for i in range(n):
@@ -224,7 +224,7 @@ def quad_4(coords_list : list):
             urllib.request.urlretrieve(
            "https://maps.googleapis.com/maps/api/staticmap?center=" + 
            str(coords_1[i][j][0]) + "," + str(coords_1[i][j][1]) + 
-           "&zoom=18&size=640x640&maptype=satellite&key=AIzaSyDSXw-4ejrlAndN62JoOmyRy4-7x9RwodE",
+           "&zoom=18&size=640x640&maptype=satellite&key="+str(key),
            "map" + str(i) + str(j) + ".jpg") 
 
     for i in range(n):
