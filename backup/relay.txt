@@ -1,0 +1,46 @@
+import RPi.GPIO as GPIO
+import time
+import sys
+
+# Define GPIO pins for each relay
+LIGHT_PIN = 21
+SIREN_PIN = 20
+PUMP_PIN = 26
+
+# Setup GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+# Setup each pin as an output
+GPIO.setup(LIGHT_PIN, GPIO.OUT)
+GPIO.setup(SIREN_PIN, GPIO.OUT)
+GPIO.setup(PUMP_PIN, GPIO.OUT)
+
+def activate_pin_for_5_seconds(pin):
+    """
+    Activates the specified GPIO pin for 5 seconds.
+    """
+    GPIO.output(pin, GPIO.HIGH)
+    time.sleep(5)
+    GPIO.output(pin, GPIO.LOW)
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python relay.py [light/siren/pump]")
+        return
+
+    command = sys.argv[1].lower()
+    if command == "light":
+        activate_pin_for_5_seconds(LIGHT_PIN)
+    elif command == "siren":
+        activate_pin_for_5_seconds(SIREN_PIN)
+    elif command == "pump":
+        activate_pin_for_5_seconds(PUMP_PIN)
+    else:
+        print("Invalid command.")
+
+if __name__ == "__main__":
+    main()
+
+    # Clean up GPIO on normal exit
+    GPIO.cleanup()

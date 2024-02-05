@@ -1,0 +1,36 @@
+import RPi.GPIO as GPIO
+import time
+
+# Set the GPIO numbering mode
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
+
+# Set the GPIO pin for the servo
+servo_pin = 13
+GPIO.setup(servo_pin, GPIO.OUT)
+
+# Set the PWM and initialize it
+pwm = GPIO.PWM(servo_pin, 50)  # 50Hz frequency
+pwm.start(0)
+
+def set_servo_angle(angle):
+    # Normalize the angle to be within 0 to 180
+    normalized_angle = angle % 180
+
+    # Convert angle to duty cycle
+    duty = normalized_angle / 18 + 2
+
+    GPIO.output(servo_pin, True)
+    pwm.ChangeDutyCycle(duty)
+    time.sleep(1)
+    GPIO.output(servo_pin, False)
+    pwm.ChangeDutyCycle(0)
+
+# Test the servo
+try:
+    while True:
+        angle = float(input("Enter angle (-180 to 180): "))
+        set_servo_angle(angle)
+except KeyboardInterrupt:
+    pwm.stop()
+    GPIO.cleanup()
