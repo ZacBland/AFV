@@ -1,7 +1,6 @@
-from a_star import *
+from search.a_star.a_star import *
 import pygame as pyg
 import sys
-import time
 
 BLACK = (0, 0, 0)
 WHITE = (200, 200, 200)

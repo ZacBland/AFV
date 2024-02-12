@@ -1,5 +1,5 @@
 import unittest
-from ..a_star import *
+from search.grid import *
 
 class TestStringMethods(unittest.TestCase):
 
