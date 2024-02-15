@@ -21,7 +21,6 @@ class State:
         self.y = y
         self.yaw = yaw
         self.v = v
-        self.predelta = None
 
 
 class MPC:
@@ -39,22 +38,22 @@ class MPC:
         self.Qf = self.Q  # state final matrix
         self.GOAL_DIS = 1.5  # goal distance
         self.STOP_SPEED = 2.0  # stop speed
-        self.MAX_TIME = 500.0  # max simulation time
+        self.MAX_TIME = 100.0  # max simulation time
 
         self.MAX_ITER = 5
         self.DU_TH = 0.1
 
-        self.TARGET_SPEED = mph2ms(20)  # [m/s]
-        self.N_IND_SEARCH = 20  # Search Index Number
+        self.TARGET_SPEED = mph2ms(40)  # [m/s]
+        self.N_IND_SEARCH = 50  # Search Index Number
 
-        self.dt = 0.1
+        self.dt = 0.2
 
         self.car = car_desc
         self.MAX_STEER = car_desc.max_steer  # maximum steering angle [rad]
-        self.MAX_STEER_SPEED = np.deg2rad(30.0)  # maximum steering speed [rad/s]
+        self.MAX_STEER_SPEED = np.deg2rad(5.0)  # maximum steering speed [rad/s]
         self.MAX_SPEED = mph2ms(45.0)  # [m/s]
         self.MIN_SPEED = mph2ms(-10.0)  # [m/s]
-        self.MAX_ACCEL = mph2ms(10.0)  # [m/s^2]
+        self.MAX_ACCEL = mph2ms(15.0)  # [m/s^2]
 
     def linear_model_matrix(self, v, phi, delta):
 
@@ -152,8 +151,8 @@ class MPC:
             du = sum(abs(oa - poa)) + sum(abs(od - pod))  # calc u change value
             if du <= self.DU_TH:
                 break
-        else:
-            print("Iterative is max iter")
+        #else:
+            #print("Iterative is max iter")
 
         return oa, od, ox, oy, oyaw, ov
 
@@ -269,10 +268,13 @@ class MPC:
 
         return False
 
-    def calc_speed_profile(self, cx, cy, cyaw, target_speed):
+    def calc_speed_profile(self, cx, cy, cyaw, ccur, target_speed):
 
         speed_profile = [target_speed] * len(cx)
         direction = 1.0  # forward
+
+        def brake_func(x):
+            return math.log(abs(x)+1)+1
 
         # Set stop point
         for i in range(len(cx) - 1):
@@ -288,129 +290,16 @@ class MPC:
                 else:
                     direction = 1.0
 
-            if direction != 1.0:
-                speed_profile[i] = - target_speed
-            else:
-                speed_profile[i] = target_speed
+            speed_profile[i] = direction * target_speed
 
         speed_profile[-1] = 0.0
 
+
+        brake_padding = 500
+        for i in range(2, 500):
+            speed_profile[-i] = i*(target_speed/(brake_padding-2))
+
         return speed_profile
-
-    def do_simulation(self, cx, cy, cyaw, sp, dl, initial_state):
-        """
-        Simulation
-
-        cx: course x position list
-        cy: course y position list
-        cy: course yaw position list
-        sp: speed profile
-        dl: course tick [m]
-
-        """
-
-        goal = [cx[-1], cy[-1]]
-
-        state = initial_state
-
-        # initial yaw compensation
-        if state.yaw - cyaw[0] >= math.pi:
-            state.yaw -= math.pi * 2.0
-        elif state.yaw - cyaw[0] <= -math.pi:
-            state.yaw += math.pi * 2.0
-
-        time = 0.0
-        x = [state.x]
-        y = [state.y]
-        yaw = [state.yaw]
-        v = [state.v]
-        t = [0.0]
-        d = [0.0]
-        a = [0.0]
-        target_ind, _ = self.calc_nearest_index(state, cx, cy, cyaw, 0)
-
-        odelta, oa = None, None
-
-        cyaw = smooth_yaw(cyaw)
-
-
-        while self.MAX_TIME >= time:
-            xref, target_ind, dref = self.calc_ref_trajectory(
-                state, cx, cy, cyaw, sp, dl, target_ind)
-
-            x0 = [state.x, state.y, state.v, state.yaw]  # current state
-
-            oa, odelta, ox, oy, oyaw, ov = self.iterative_linear_mpc_control(
-                xref, x0, dref, oa, odelta)
-
-            di, ai = 0.0, 0.0
-            if odelta is not None:
-                di, ai = odelta[0], oa[0]
-                state = self.update_state(state, ai, di)
-
-            time = time + self.dt
-
-            x.append(state.x)
-            y.append(state.y)
-            yaw.append(state.yaw)
-            v.append(state.v)
-            t.append(time)
-            d.append(di)
-            a.append(ai)
-
-            if self.check_goal(state, goal, target_ind, len(cx)):
-                print("Goal")
-                break
-
-            if show_animation:  # pragma: no cover
-
-                # for stopping simulation with the esc key.
-                plt.gcf().canvas.mpl_connect('key_release_event',
-                                             lambda event: [exit(0) if event.key == 'escape' else None])
-                if ox is not None:
-                    plt.plot(ox, oy, "xr", label="MPC")
-                plt.plot(cx, cy, "-r", label="course")
-                plt.plot(x, y, "ob", label="trajectory")
-                plt.plot(xref[0, :], xref[1, :], "xk", label="xref")
-                plt.plot(cx[target_ind], cy[target_ind], "xg", label="target")
-                #outlines, fr_wheel, rr_wheel, fl_wheel, rl_wheel = self.car.plot_car(state.x, state.y, state.yaw, di)
-                
-                #plt.plot(outlines[0], outlines[1], color='black')
-                
-                #plt.plot(*fr_wheel, color='black')
-                #plt.plot(*rr_wheel, color='black')
-                #plt.plot(*fl_wheel, color='black')
-                #plt.plot(*rl_wheel, color='black')
-                
-                plt.axis("equal")
-                plt.grid(True)
-                plt.title("Time[s]:" + str(round(time, 2))
-                          + ", speed[mph]:" + str(round(ms2mph(state.v), 2)))
-                plt.pause(0.0001)
-
-
-        return t, x, y, yaw, v, d, a
-
-
-
-if __name__ == "__main__":
-
-    mpc = MPC()
-
-    import csv
-    with open('../data/test.csv', newline='') as f:
-        rows = list(csv.reader(f, delimiter=','))
-
-    ds = 0.05
-    px, py = [[float(i) for i in row] for row in zip(*rows[1:])]
-
-    cx, cy, cyaw, _ = interpolate_cubic_spline(px, py, step=ds)
-
-    sp = mpc.calc_speed_profile(cx, cy, cyaw, mpc.TARGET_SPEED)
-
-    initial_state = State(x=cx[0], y=cy[0], yaw=cyaw[0], v=0.0)
-
-    t, x, y, yaw, v, d, a = mpc.do_simulation(cx, cy, cyaw, sp, ds, initial_state)
 
 
 

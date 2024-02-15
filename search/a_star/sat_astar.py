@@ -6,10 +6,11 @@ from matplotlib.animation import PillowWriter
 from search.graph import *
 from search.a_star.a_star import *
 import random
+from PIL import Image
 
 graph = Graph()
 c1 = Node("c1", (249.2, 57.9))
-ctr = Node("tr", (287.5, 57.9))
+ctr = Node("ctr", (287.5, 57.9))
 c2 = Node("c2", (249.2, 197.8))
 cr2 = Node("cr2", (287.5, 197.8))
 c3 = Node("c3", (249.2, 318.7))
@@ -94,9 +95,13 @@ fig, ax = plt.subplots()
 ax.axes.get_xaxis().set_visible(False)
 ax.axes.get_yaxis().set_visible(False)
 
+vertical_scale_factor = (1381.70/3.281)/abs(ctr.pos[1] - cr2.pos[1])
+horizontal_scale_factor = (380.00/3.281)/abs(c1.pos[0] - cr2.pos[0])
+
 for node in graph.nodes:
+    node.pos = (node.pos[0]* vertical_scale_factor, node.pos[1]*horizontal_scale_factor)
     circle = plt.Circle(node.pos, radius=4, facecolor="r", linewidth=1, edgecolor="k", zorder=10)
-    #plt.text(node.pos[0], node.pos[1], node.name, zorder=20)
+    plt.text(node.pos[0], node.pos[1], node.name, zorder=20)
     ax.add_artist(circle)
 
 lines = {}
@@ -105,7 +110,11 @@ for edge in graph.edges:
     line = ax.plot([edges[0].pos[0], edges[1].pos[0]], [edges[0].pos[1], edges[1].pos[1]], lw=2, color="gray")
     lines[frozenset({edges[0],edges[1]})] = line[0]
 
-sat = image.imread("../../images/sat_img.PNG")
+
+sat = Image.open("../../images/sat_img.PNG")
+width, height = sat.size
+
+sat = sat.resize((int(width*horizontal_scale_factor), int(height*vertical_scale_factor)))
 plt.imshow(sat)
 
 START = t13
@@ -122,6 +131,7 @@ line = LineString(list(map(lambda x: x.pos, path)))
 distances = np.linspace(0, line.length, n)
 points = [line.interpolate(distance) for distance in distances]
 
+
 import csv
 with open("../../data/a_star_waypoints.csv", 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')
@@ -129,7 +139,10 @@ with open("../../data/a_star_waypoints.csv", 'w', newline='') as csvfile:
     for point in points:
         writer.writerow([point.x, point.y])
 
-"""
+with open("../../data/sat_scale.csv", "w", newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=',')
+    writer.writerow([horizontal_scale_factor,vertical_scale_factor])
+
 
 frame_section = 60/(len(path)-1)
 
@@ -145,6 +158,8 @@ def update(frame):
 animation = ani.FuncAnimation(fig=fig, func=update, frames=60, interval=120)
 #writer = PillowWriter(fps=15,metadata=dict(artist='Me'),bitrate=1800)
 #animation.save('search.gif', writer=writer)
+
+
 plt.tight_layout()
-plt.show()
-"""
+#plt.show()
+
