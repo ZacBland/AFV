@@ -55,14 +55,32 @@ print(f"RTSP Stream URL: {stream_url}")
 
 # Start capturing and displaying the video stream
 cap = cv2.VideoCapture(stream_url)
+cap = cv2.VideoCapture(stream_url)
 
+if not cap.isOpened():
+    print("Error: Could not open video stream.")
+else:
+    while True:
+        ret, frame = cap.read()
+        if ret:
+            predictions = model.predict(frame, conf=0.50) # You can play with the `conf` and `iou` parameters
+            #print(predictions)
+            predictions.show()
+            #cv2.imshow('ONVIF Camera Stream', frame)
+
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+        else:
+            print("Frame is not received correctly. Exiting...")
+            break
+'''
 ret, frame = cap.read()
 if ret:
     predictions = model.predict(frame, conf=0.50) # You can play with the `conf` and `iou` parameters
     predictions.show()
 else:
     print("Failed to capture frame.")
-
+'''
 
 cap.release()
 cv2.destroyAllWindows()
