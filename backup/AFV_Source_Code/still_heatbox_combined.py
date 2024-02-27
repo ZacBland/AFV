@@ -66,11 +66,11 @@ def get_next_filename(directory, base_filename):
     return os.path.join(directory, f"{base_filename}{max_index + 1}.jpg")
 
 # Usage
-rtsp_url = "rtsp://admin:qzIRge@169.254.80.22/avc/"
+rtsp_url = "rtsp://admin:qzIRge@10.42.0.45/avc/"
 frame = capture_frame(rtsp_url)
 
 if frame is not None:
-    destination_folder = "C:/Users/alexa/Desktop/AFV_Source_Code/flir_images"
+    destination_folder = "./flir_images"
     base_filename = "heatmap_boxed"
     save_path = get_next_filename(destination_folder, base_filename)
     apply_heatmap_with_box(frame, save_path)
