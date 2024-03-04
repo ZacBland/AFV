@@ -1,14 +1,8 @@
 from __future__ import annotations
-import numpy as np
 from libs.defines import *
-from libs import CarDescription, normalize_angle, interpolate_cubic_spline
+from libs import CarDescription, normalize_angle
 import math
 import cvxpy
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-
-show_animation = False
-
 
 
 class State:
@@ -34,25 +28,24 @@ class MPC:
         # mpc parameters
         self.R = np.diag([0.01, 0.01])  # input cost matrix
         self.Rd = np.diag([0.01, 1.0])  # input difference cost matrix
-        self.Q = np.diag([1.0, 1.0, 0.5, 0.5])  # state cost matrix
+        self.Q = np.diag([0.1, 0.1, 3.0, 0.5])  # state cost matrix
         self.Qf = self.Q  # state final matrix
         self.GOAL_DIS = 1.5  # goal distance
         self.STOP_SPEED = 2.0  # stop speed
-        self.MAX_TIME = 100.0  # max simulation time
 
         self.MAX_ITER = 5
         self.DU_TH = 0.1
 
-        self.TARGET_SPEED = mph2ms(40)  # [m/s]
-        self.N_IND_SEARCH = 50  # Search Index Number
+        self.TARGET_SPEED = mph2ms(15)  # [m/s]
+        self.N_IND_SEARCH = 1000  # Search Index Number
 
         self.dt = 0.2
 
         self.car = car_desc
         self.MAX_STEER = car_desc.max_steer  # maximum steering angle [rad]
         self.MAX_STEER_SPEED = np.deg2rad(5.0)  # maximum steering speed [rad/s]
-        self.MAX_SPEED = mph2ms(45.0)  # [m/s]
-        self.MIN_SPEED = mph2ms(-10.0)  # [m/s]
+        self.MAX_SPEED = mph2ms(20.0)  # [m/s]
+        self.MIN_SPEED = mph2ms(-20.0)  # [m/s]
         self.MAX_ACCEL = mph2ms(15.0)  # [m/s^2]
 
     def linear_model_matrix(self, v, phi, delta):
@@ -78,6 +71,62 @@ class MPC:
         C[3] = - self.dt * v * delta / (self.car.wheelbase * math.cos(delta) ** 2)
 
         return A, B, C
+
+    def linear_mpc_control(self, xref, xbar, x0, dref):
+        """
+        linear mpc control
+
+        xref: reference point
+        xbar: operational point
+        x0: initial state
+        dref: reference steer angle
+        """
+
+        x = cvxpy.Variable((self.NX, self.T + 1))
+        u = cvxpy.Variable((self.NU, self.T))
+
+        cost = 0.0
+        constraints = []
+
+        for t in range(self.T):
+            cost += cvxpy.quad_form(u[:, t], self.R)
+
+            if t != 0:
+                cost += cvxpy.quad_form(xref[:, t] - x[:, t], self.Q)
+
+            A, B, C = self.linear_model_matrix(xbar[2, t], xbar[3, t], dref[0, t])
+            constraints += [x[:, t + 1] == A @ x[:, t] + B @ u[:, t] + C]
+
+
+            if t < (self.T - 1):
+                cost += cvxpy.quad_form(u[:, t + 1] - u[:, t], self.Rd)
+                constraints += [cvxpy.abs(u[1, t + 1] - u[1, t]) <=
+                                self.MAX_STEER_SPEED * self.dt]
+
+        cost += cvxpy.quad_form(xref[:, self.T] - x[:, self.T], self.Qf)
+
+        constraints += [x[:, 0] == x0]
+        constraints += [x[2, :] <= self.MAX_SPEED]
+        constraints += [x[2, :] >= self.MIN_SPEED]
+        constraints += [cvxpy.abs(u[0, :]) <= self.MAX_ACCEL]
+        constraints += [cvxpy.abs(u[1, :]) <= self.MAX_STEER]
+
+        prob = cvxpy.Problem(cvxpy.Minimize(cost), constraints)
+        prob.solve(solver=cvxpy.ECOS, verbose=False)
+
+        if prob.status == cvxpy.OPTIMAL or prob.status == cvxpy.OPTIMAL_INACCURATE:
+            ox = get_nparray_from_matrix(x.value[0, :])
+            oy = get_nparray_from_matrix(x.value[1, :])
+            ov = get_nparray_from_matrix(x.value[2, :])
+            oyaw = get_nparray_from_matrix(x.value[3, :])
+            oa = get_nparray_from_matrix(u.value[0, :])
+            odelta = get_nparray_from_matrix(u.value[1, :])
+
+        else:
+            print("Error: Cannot solve mpc..")
+            oa, odelta, ox, oy, oyaw, ov = None, None, None, None, None, None
+
+        return oa, odelta, ox, oy, oyaw, ov
 
     def update_state(self, state, a, delta):
         if delta >= self.MAX_STEER:
@@ -155,62 +204,6 @@ class MPC:
             #print("Iterative is max iter")
 
         return oa, od, ox, oy, oyaw, ov
-
-    def linear_mpc_control(self, xref, xbar, x0, dref):
-        """
-        linear mpc control
-
-        xref: reference point
-        xbar: operational point
-        x0: initial state
-        dref: reference steer angle
-        """
-
-        x = cvxpy.Variable((self.NX, self.T + 1))
-        u = cvxpy.Variable((self.NU, self.T))
-
-        cost = 0.0
-        constraints = []
-
-        for t in range(self.T):
-            cost += cvxpy.quad_form(u[:, t], self.R)
-
-            if t != 0:
-                cost += cvxpy.quad_form(xref[:, t] - x[:, t], self.Q)
-
-            A, B, C = self.linear_model_matrix(
-                xbar[2, t], xbar[3, t], dref[0, t])
-            constraints += [x[:, t + 1] == A @ x[:, t] + B @ u[:, t] + C]
-
-            if t < (self.T - 1):
-                cost += cvxpy.quad_form(u[:, t + 1] - u[:, t], self.Rd)
-                constraints += [cvxpy.abs(u[1, t + 1] - u[1, t]) <=
-                                self.MAX_STEER_SPEED * self.dt]
-
-        cost += cvxpy.quad_form(xref[:, self.T] - x[:, self.T], self.Qf)
-
-        constraints += [x[:, 0] == x0]
-        constraints += [x[2, :] <= self.MAX_SPEED]
-        constraints += [x[2, :] >= self.MIN_SPEED]
-        constraints += [cvxpy.abs(u[0, :]) <= self.MAX_ACCEL]
-        constraints += [cvxpy.abs(u[1, :]) <= self.MAX_STEER]
-
-        prob = cvxpy.Problem(cvxpy.Minimize(cost), constraints)
-        prob.solve(solver=cvxpy.ECOS, verbose=False)
-
-        if prob.status == cvxpy.OPTIMAL or prob.status == cvxpy.OPTIMAL_INACCURATE:
-            ox = get_nparray_from_matrix(x.value[0, :])
-            oy = get_nparray_from_matrix(x.value[1, :])
-            ov = get_nparray_from_matrix(x.value[2, :])
-            oyaw = get_nparray_from_matrix(x.value[3, :])
-            oa = get_nparray_from_matrix(u.value[0, :])
-            odelta = get_nparray_from_matrix(u.value[1, :])
-
-        else:
-            print("Error: Cannot solve mpc..")
-            oa, odelta, ox, oy, oyaw, ov = None, None, None, None, None, None
-
-        return oa, odelta, ox, oy, oyaw, ov
 
     def calc_ref_trajectory(self, state, cx, cy, cyaw, sp, dl, pind):
         xref = np.zeros((self.NX, self.T + 1))

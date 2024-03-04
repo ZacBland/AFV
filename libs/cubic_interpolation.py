@@ -26,5 +26,4 @@ def interpolate_cubic_spline(x: ArrayLike, y: ArrayLike, step: float=0.05, condi
 
     spline_x, spline_y = cubic_spline(s).T
 
-
     return spline_x, spline_y, yaw, curvature

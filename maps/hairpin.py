@@ -3,10 +3,9 @@ import math
 
 
 if __name__ == "__main__":
-    x = [0.0, 0.0, 100.0]
-    y = [0.0, 100.0, 100.0]
-    n = 10
-
+    x = [0.0, 100.0, 100.0]
+    y = [0.0, 0.0, 100.0]
+    n = 1000
 
     from shapely.geometry import LineString
     from shapely.ops import unary_union

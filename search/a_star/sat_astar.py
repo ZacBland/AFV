@@ -115,7 +115,8 @@ sat = Image.open("../../images/sat_img.PNG")
 width, height = sat.size
 
 sat = sat.resize((int(width*horizontal_scale_factor), int(height*vertical_scale_factor)))
-plt.imshow(sat)
+
+plt.imshow(sat, origin="lower")
 
 START = t13
 GOAL = c1
@@ -155,11 +156,12 @@ def update(frame):
     if section < len(path)-1:
         lines[frozenset({path[section], path[section+1]})].set_color("red")
 
-animation = ani.FuncAnimation(fig=fig, func=update, frames=60, interval=120)
+#animation = ani.FuncAnimation(fig=fig, func=update, frames=60, interval=120)
 #writer = PillowWriter(fps=15,metadata=dict(artist='Me'),bitrate=1800)
 #animation.save('search.gif', writer=writer)
 
 
+
 plt.tight_layout()
-#plt.show()
+plt.show()
 

@@ -60,6 +60,10 @@ class Simulation:
             self.car_ax.plot(*desc_plot, color="black")
         self.car_ax.set_yticks([])
         self.car_ax.set_xticks([])
+        self.car_ax.invert_yaxis()
+
+        self.mpc_ax.set_xlim(x[frame] - 200, x[frame] + 200)
+        self.mpc_ax.set_ylim(y[frame] + 200, y[frame] - 200)
 
         #Draw Yaw Graph
         self.yaw_arr.append(math.degrees(normalize_angle(yaw[frame])))
@@ -78,7 +82,7 @@ class Simulation:
         self.d_follower_x.set_data([frame, frame], [0, self.d_arr[frame]])
         self.d_follower_text.set_x(frame)
         self.d_follower_text.set_y(self.d_arr[frame])
-        self.d_follower_text.set_text(str(round(self.d_arr[frame])))
+        self.d_follower_text.set_text(str(round(self.d_arr[frame],3)))
         self.d_ax.set_ylim(-math.degrees(self.mpc.MAX_STEER)-10, math.degrees(self.mpc.MAX_STEER)+10)
 
         #Draw Velo Graph
@@ -100,7 +104,7 @@ class Simulation:
         self.err_text.set_text(f"Avg Err: {round(np.average(self.error_arr),3)}")
 
 
-    def create_animation(self, data: dict):
+    def create_animation(self, data: dict, img_str = None, img_scale = None):
         fig = plt.figure(constrained_layout=True)
 
         self.ax = fig.subplot_mosaic([[0, 1], [0, 2], [0, 3], [0, 4], [0, 5]], gridspec_kw={'width_ratios': [2, 1]})
@@ -117,6 +121,18 @@ class Simulation:
         cy = data['cy']
         x = data['x']
         y = data['y']
+
+        img = None
+        if img_str is not None:
+            from PIL import Image
+            img = Image.open(img_str)
+
+            if img_scale is not None:
+                width, height = img.size
+                img = img.resize((int(width*img_scale[0]), int(height*img_scale[1])))
+
+            self.mpc_ax.imshow(img, origin="lower")
+
 
 
         if "sp" in data:
@@ -192,23 +208,15 @@ class Simulation:
         self.err_text = self.err_ax.text(0.43, 0.90, "", transform=self.err_ax.transAxes)
         self.err_ax.grid()
 
-        """
-        with open('../data/sat_scale.csv', newline='') as f:
-            row = list(csv.reader(f, delimiter=','))
-            horz_scale, vert_scale = float(row[0][0]), float(row[0][1])
-
-        from PIL import Image
-        sat = Image.open("../images/sat_img.PNG" )
-        width, height = sat.size
-        sat = sat.resize((int(width * horz_scale), int(height * vert_scale)))
-        self.ax[0].imshow(sat)
-        """
-
         anim = FuncAnimation(fig, self.animate, frames=self.frames, init_func=lambda: None, fargs=[data],
                              interval=(1.0/self.fps)*1000, repeat=self.loop)
+
+        from matplotlib.animation import PillowWriter
+        writer = PillowWriter(fps=50, metadata=dict(artist='Me'), bitrate=1800)
+        anim.save('MPC.gif', writer=writer)
         fig.set_size_inches(18.5, 10.5, forward=True)
         plt.tight_layout()
-        plt.show()
+        #plt.show()
 
 
     def simulate(self, cx, cy, cyaw, sp, dt, initial_state, save_sim = True, name="sim"):
@@ -240,7 +248,7 @@ class Simulation:
 
         cyaw = smooth_yaw(cyaw)
 
-        while self.mpc.MAX_TIME >= time:
+        while 100.0 >= time:
             xref, target_ind, dref = self.mpc.calc_ref_trajectory(state, cx, cy, cyaw, sp, dt, target_ind)
 
             x0 = [state.x, state.y, state.v, state.yaw]  # current state
@@ -313,7 +321,11 @@ if __name__ == "__main__":
     mpc = MPC(car_desc)
     sim = Simulation(mpc)
 
-    name = "waypoints"
+    name = "a_star_waypoints"
+    with open(f'../data/sat_scale.csv', newline='') as f:
+        rows = list(csv.reader(f, delimiter=','))
+    width = float(rows[0][0])
+    height = float(rows[0][1])
 
     calc_sim = True
     if calc_sim:
@@ -329,6 +341,6 @@ if __name__ == "__main__":
         sim.simulate(cx, cy, cyaw, sp, sim.mpc.dt, initial_state, name=name)
 
     data = sim.dict_from_json(f"../data/{name}.json")
-    sim.create_animation(data)
+    sim.create_animation(data, "../images/sat_img.png", (width, height))
 
 
