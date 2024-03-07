@@ -2,6 +2,11 @@ from numpy import cos, sin, tan
 from libs import normalize_angle
 
 
+"""
+https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/BicycleModel.html
+See link above for better explanation on Kinematic Equations.
+"""
+
 class KinematicModel:
 
     def __init__(self, L=1.0, dt=0.05):

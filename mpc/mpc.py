@@ -23,7 +23,7 @@ class MPC:
 
         self.NX = 4  # x = x, y, v, yaw
         self.NU = 2  # a = [accel, steer]
-        self.T = 5  # Horizon length
+        self.T = 15  # Horizon length
 
         # mpc parameters
         self.R = np.diag([0.01, 0.01])  # input cost matrix
@@ -39,7 +39,7 @@ class MPC:
         self.TARGET_SPEED = mph2ms(15)  # [m/s]
         self.N_IND_SEARCH = 1000  # Search Index Number
 
-        self.dt = 0.2
+        self.dt = 0.01
 
         self.car = car_desc
         self.MAX_STEER = car_desc.max_steer  # maximum steering angle [rad]
@@ -294,6 +294,9 @@ class MPC:
 
         return speed_profile
 
+car_desc = CarDescription()
+mpc = MPC(car_desc)
+mpc.linear_model_matrix(5,5,0.2)
 
 
 
