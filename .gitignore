@@ -1,3 +1,11 @@
 ./crowdai
 *.tif
 *.tiff
+*.jpg
+*.jpeg
+*.png
+Flir/checkpoints
+Flir/FLIR_ADAS_v2
+Flir/images
+*.zip
+*.pth
