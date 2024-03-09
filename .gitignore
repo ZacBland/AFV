@@ -9,3 +9,9 @@ Flir/FLIR_ADAS_v2
 Flir/images
 *.zip
 *.pth
+Flir/runs
+Tiff/maps
+Flir/lightning_logs
+Flir/tb_logs
+Flir/__pycache__
+Flir/model_save_folder
