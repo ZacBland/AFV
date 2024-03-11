@@ -1,0 +1,193 @@
+#!/usr/bin/env python
+
+import flirpy.io.seq
+from flirpy.util.exiftool import Exiftool
+import glob
+import argparse
+import os
+import logging
+import natsort
+import cv2
+import shutil
+from tqdm import tqdm
+import time
+
+def add_bool_arg(parser, name, help_string="", default=False):
+    # https://stackoverflow.com/a/31347222
+    group = parser.add_mutually_exclusive_group(required=False)
+    group.add_argument('--' + name, dest=name, help=help_string, action='store_true')
+    group.add_argument('--no_' + name, dest=name, help=help_string, action='store_false')
+    parser.set_defaults(**{name:default})
+
+def recursive_copy(src, dst):
+
+    items = os.listdir(src)
+
+    for item in items:
+
+        item_path = os.path.join(src, item)
+        new_dst = os.path.abspath(os.path.join(dst, item))
+
+        if os.path.isfile(item_path):
+            shutil.copy(item_path, new_dst)
+
+        elif os.path.isdir(item_path):
+            os.makedirs(new_dst, exist_ok=True)
+            recursive_copy(item_path, new_dst)
+    
+    return
+
+def recursive_move(src, dst):
+    # https://stackoverflow.com/a/7420617/395457
+
+    for src_dir, dirs, files in os.walk(src):
+        dst_dir = src_dir.replace(src, dst, 1)
+        
+        os.makedirs(dst_dir, exist_ok=True)
+
+        for file_ in files:
+            src_file = os.path.join(src_dir, file_)
+            dst_file = os.path.join(dst_dir, file_)
+            if os.path.exists(dst_file):
+                # in case of the src and dst are the same file
+                if os.path.samefile(src_file, dst_file):
+                    continue
+                os.remove(dst_file)
+            shutil.move(src_file, dst_dir)
+
+if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser(description='Split all files in folder', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-o', '--output', help='Output folder', default="./")
+    parser.add_argument('-i', '--input', help='Input file mask, e.g. "/path/*.SEQ" ', default="*.SEQ")
+    parser.add_argument('-v', '--verbosity', help='Logging level', default='info')
+    parser.add_argument('--preview_format', help='Output preview format (png, jpg, tiff)', default='jpg')
+    parser.add_argument('--rgb', help='If provided, split videos too e.g. "/path/*.MOV" ', default="")
+    parser.add_argument('--jpeg_quality', help='RGB Output quality (0-100)', type=int, default=80)
+    parser.add_argument('--use_gstreamer', help='Use Gstreamer for video decoding', action='store_true')
+    parser.add_argument('--copy', help='Copy first, instead of move after split', action='store_true')
+    parser.add_argument('--width', help='Image width (if unspecified flirpy will attempt to infer from FFF files)', type=int, default=None)
+    parser.add_argument('--height', help='Image height', type=int, default=None)
+
+    add_bool_arg(parser, name='merge_folders', help_string='Merge output folders (and remove intermediates afterwards)', default=True)
+    add_bool_arg(parser, name='split_filetypes', help_string='Split output files by type (make raw/preview/radiometric folders)', default=True)
+    add_bool_arg(parser, name='export_meta', help_string='Export meta information files (also for geotagging)', default=True)
+    add_bool_arg(parser, name='export_tiff', help_string='Export tiff files', default=True)
+    add_bool_arg(parser, name='export_radiometric', help_string='Export radiometric tiff files', default=True)
+    add_bool_arg(parser, name='export_raw', help_string='Leave raw files (by default copy meta to radiometric)', default=False)
+    add_bool_arg(parser, name='export_preview', help_string='Export 8-bit preview png files', default=True)
+    add_bool_arg(parser, name='skip_thermal', help_string='Skip thermal processing', default=False)
+    add_bool_arg(parser, name='sync_rgb', help_string='Attempt to synchronise RGB/IR streams', default=False)
+
+    args = parser.parse_args()
+
+    logger = logging.getLogger(__name__)
+
+    if args.verbosity != 'quiet':
+        numeric_level = getattr(logging, args.verbosity.upper(), None)
+        if not isinstance(numeric_level, int):
+            raise ValueError('Invalid log level: %s' % args.verbosity)
+        logging.basicConfig(level=numeric_level)
+    
+    output_folder = os.path.abspath(args.output)
+    input_mask = args.input
+
+    if output_folder != "./":
+        os.makedirs(output_folder, exist_ok=True)
+
+    files = natsort.natsorted(glob.glob(input_mask))
+    
+    for f in files:
+        logger.info("Loading: {}".format(f))
+    
+    splitter = flirpy.io.seq.Splitter(output_folder,
+                    preview_format=args.preview_format)
+    splitter.split_filetypes = args.split_filetypes
+    splitter.export_meta = args.export_meta
+    splitter.export_tiff = args.export_tiff
+    splitter.export_preview = args.export_preview
+    splitter.export_radiometric = args.export_radiometric
+
+    if not args.skip_thermal:
+        folders = splitter.process(files)
+    
+        if args.merge_folders:
+            logger.info("Merging folders")
+            for folder in tqdm(folders):
+
+                # Check whether we should remove raw files
+                if not args.export_raw:
+                    logger.info("Removing raw folder from {}".format(folder))
+                    for txt_file in glob.glob(os.path.join(folder, "raw", "*.txt")):
+                        shutil.copy2(txt_file, os.path.join(folder, "radiometric"))
+
+                    shutil.rmtree(os.path.join(folder, "raw"))
+
+                logger.info("Copying {}".format(folder))
+                if not args.copy:
+                    recursive_copy(folder, output_folder)
+                else:
+                    recursive_move(folder, output_folder)
+
+                shutil.rmtree(folder)
+            
+            
+        
+    if args.rgb != "":
+        os.makedirs(os.path.join(output_folder, "rgb"), exist_ok=True)
+        video_files = natsort.natsorted(glob.glob(args.rgb))
+        frame_i = 0
+
+        for f in video_files:
+            logger.info("Loading: {}".format(f))
+
+        # Count number of frames
+        n_infrared = len(glob.glob(os.path.join(output_folder, "preview/frame_*")))
+        n_rgb = 0
+
+        logger.info("{} infrared frames".format(n_infrared))
+
+        for video in tqdm(video_files):
+            if args.use_gstreamer:
+                pipeline = "gst-launch-1.0 -e -v filesrc location={} ! qtdemux ! decodebin ! appsink".format(video)
+                cap = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
+            else:
+                cap = cv2.VideoCapture(video)
+
+            n_rgb += cap.get(cv2.CAP_PROP_FRAME_COUNT)
+
+        # Calculate offset between thermal and RGB streams
+        get_frame_number = lambda i: round(n_infrared*float(i)/n_rgb)
+
+        assert get_frame_number(n_rgb) == n_infrared
+
+        logger.info("{} RGB frames".format(n_rgb))
+
+        rgb_frame = 0
+
+        for video in tqdm(video_files):
+            if args.use_gstreamer:
+                pipeline = "gst-launch-1.0 -e -v filesrc location={} ! qtdemux ! decodebin ! appsink".format(video)
+                cap = cv2.VideoCapture(pipeline, cv2.CAP_GSTREAMER)
+            else:
+                cap = cv2.VideoCapture(video)
+
+            for _ in tqdm(range(int(cap.get(cv2.CAP_PROP_FRAME_COUNT)))):
+                res, frame = cap.read()
+
+                if res:
+                    if args.sync_rgb:
+                        frame_id = get_frame_number(rgb_frame)
+                    else:
+                        frame_id = rgb_frame
+
+                    out_path = os.path.join(output_folder, "rgb", "frame_{:06d}.jpg".format(frame_id))
+                    cv2.imwrite(out_path, frame, [cv2.IMWRITE_JPEG_QUALITY, args.jpeg_quality])
+
+                    rgb_frame += 1
+
+        # Copy over geotags etc
+        logger.info("Copying meta/geotags to RGB frames")
+        exiftool = Exiftool()
+        copy_filemask = os.path.normpath("./raw/%f.fff")
+        exiftool.copy_meta(output_folder, filemask=copy_filemask, output_folder=os.path.join(output_folder, "rgb"), ext="jpg")

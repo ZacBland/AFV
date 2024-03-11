@@ -60,7 +60,16 @@ else:
     while True:
         ret, frame = cap.read()
         if ret:
+            print(frame.shape)
             cv2.imshow('ONVIF Camera Stream', frame)
+            blurred = cv2.GaussianBlur(frame, (21, 21), 0)
+
+            # Subtract the blurred frame from the original frame to get a high-pass filter effect
+            high_pass = cv2.subtract(frame, blurred)
+
+            # Display the result
+            cv2.imshow('High-Pass Filter Result', high_pass)
+    
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         else:
