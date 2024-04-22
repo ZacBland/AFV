@@ -136,7 +136,7 @@ points = [line.interpolate(distance) for distance in distances]
 import csv
 with open("../../data/a_star_waypoints.csv", 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=',')
-    writer.writerow(["X-axis","Y-axis"])
+    writer.writerow(["X-axis", "Y-axis"])
     for point in points:
         writer.writerow([point.x, point.y])
 

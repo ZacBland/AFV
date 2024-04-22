@@ -14,7 +14,6 @@ AFV_WHEELBASE = 36/39.37
 AFV_REAR_OVERHANG = 0.5 * (AFV_OVERALL_LENGTH - AFV_WHEELBASE)
 AFV_MAX_STEER = np.deg2rad(20)
 
-
 def mph2ms(mph: float):
     """
     Function to convert miles per hour to meters per second

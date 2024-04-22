@@ -294,9 +294,10 @@ class MPC:
 
         return speed_profile
 
-car_desc = CarDescription()
-mpc = MPC(car_desc)
-mpc.linear_model_matrix(5,5,0.2)
+if __name__ == "__main__":
+    car_desc = CarDescription()
+    mpc = MPC(car_desc)
+    mpc.linear_model_matrix(5,5,0.2)
 
 
 

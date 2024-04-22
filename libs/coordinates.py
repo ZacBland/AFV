@@ -1,6 +1,6 @@
 import math
 
-R = 6371
+R = 6371000 # Radius of Earth in meters
 
 
 def latlon2xyz(latitude, longitude):
