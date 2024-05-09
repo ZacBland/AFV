@@ -1,3 +1,10 @@
+"""
+5/10/24
+Author: Zac Bland
+Description:
+A* search algorithm used for finding the optimal path from one point to another.
+"""
+
 from typing import *
 from queue import PriorityQueue
 from search.graph import Node, Graph

@@ -88,7 +88,7 @@ class NavControl:
 
         self.cyaw = smooth_yaw(self.cyaw)
 
-    def read_current_state(self):
+    def update_current_state(self):
         lat = self.gps.data["lat"]
         lon = self.gps.data["lon"]
         yaw = self.gps.data["Yaw"]

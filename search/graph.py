@@ -1,3 +1,8 @@
+"""
+5/10/24
+Author: Zac Bland
+"""
+
 from __future__ import annotations
 from libs.defines import *
 from typing import *

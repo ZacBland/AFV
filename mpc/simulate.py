@@ -1,3 +1,9 @@
+"""
+Author: Zac Bland
+Description:
+This file is used to simulate path following by a simulation using MPC and A* Search
+"""
+
 from mpc import MPC, State
 from libs.cubic_interpolation import interpolate_cubic_spline
 from matplotlib import pyplot as plt
@@ -334,13 +340,12 @@ if __name__ == "__main__":
         px, py = [[float(i) for i in row] for row in zip(*rows[1:])]
 
         cx, cy, cyaw, ccur = interpolate_cubic_spline(px, py, step=sim.mpc.dt)
-        print(cx)
-        #sp = mpc.calc_speed_profile(cx, cy, cyaw, ccur, mpc.TARGET_SPEED)
-        #initial_state = State(x=cx[0], y=cy[0], yaw=90, v=0.0)
+        sp = mpc.calc_speed_profile(cx, cy, cyaw, ccur, mpc.TARGET_SPEED)
+        initial_state = State(x=cx[0], y=cy[0], yaw=90, v=0.0)
 
-        #sim.simulate(cx, cy, cyaw, sp, sim.mpc.dt, initial_state, name=name)
+        sim.simulate(cx, cy, cyaw, sp, sim.mpc.dt, initial_state, name=name)
 
-    #data = sim.dict_from_json(f"../data/{name}.json")
-    s#im.create_animation(data, "../images/sat_img.png", (width, height))
+    data = sim.dict_from_json(f"../data/{name}.json")
+    sim.create_animation(data, "../images/sat_img.png", (width, height))
 
 

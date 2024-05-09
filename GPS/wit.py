@@ -1,3 +1,9 @@
+"""
+Author: Zac Bland
+Description:
+Class function used to get data from the WitMotion GPS
+"""
+
 import platform
 from GPS.device_model import DeviceModel
 

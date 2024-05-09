@@ -1,3 +1,8 @@
+"""
+Author: Zac Bland
+Description:
+This file is used to have a car follow a given path.
+"""
 from __future__ import annotations
 from libs.defines import *
 from libs import CarDescription, normalize_angle

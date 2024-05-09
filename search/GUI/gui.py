@@ -1,9 +1,17 @@
+"""
+Author: Zac Bland
+Description:
+This program runs a GUI that lets you create a graph network and save it to a json file that you can use
+later on in path planning.
+"""
+
 import tkinter as tk
 from tkinter import Button, filedialog
 from tkintermapview import TkinterMapView
 from search.graph import *
 from PIL import Image, ImageTk
 import json
+
 
 class Window:
 
