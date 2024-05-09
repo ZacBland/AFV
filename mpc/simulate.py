@@ -1,3 +1,9 @@
+"""
+Author: Zac Bland
+Description:
+This file is used to simulate path following by a simulation using MPC and A* Search
+"""
+
 from mpc import MPC, State
 from libs.cubic_interpolation import interpolate_cubic_spline
 from matplotlib import pyplot as plt
@@ -211,12 +217,12 @@ class Simulation:
         anim = FuncAnimation(fig, self.animate, frames=self.frames, init_func=lambda: None, fargs=[data],
                              interval=(1.0/self.fps)*1000, repeat=self.loop)
 
-        from matplotlib.animation import PillowWriter
-        writer = PillowWriter(fps=50, metadata=dict(artist='Me'), bitrate=1800)
-        anim.save('MPC.gif', writer=writer)
+        #from matplotlib.animation import PillowWriter
+        #writer = PillowWriter(fps=50, metadata=dict(artist='Me'), bitrate=1800)
+        #anim.save('MPC.gif', writer=writer)
         fig.set_size_inches(18.5, 10.5, forward=True)
         plt.tight_layout()
-        #plt.show()
+        plt.show()
 
 
     def simulate(self, cx, cy, cyaw, sp, dt, initial_state, save_sim = True, name="sim"):
@@ -334,9 +340,8 @@ if __name__ == "__main__":
         px, py = [[float(i) for i in row] for row in zip(*rows[1:])]
 
         cx, cy, cyaw, ccur = interpolate_cubic_spline(px, py, step=sim.mpc.dt)
-
         sp = mpc.calc_speed_profile(cx, cy, cyaw, ccur, mpc.TARGET_SPEED)
-        initial_state = State(x=cx[0], y=cy[0], yaw=cyaw[0], v=0.0)
+        initial_state = State(x=cx[0], y=cy[0], yaw=90, v=0.0)
 
         sim.simulate(cx, cy, cyaw, sp, sim.mpc.dt, initial_state, name=name)
 
