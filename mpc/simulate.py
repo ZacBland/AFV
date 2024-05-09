@@ -12,7 +12,9 @@ import csv
 from libs.defines import *
 from libs.car_description import CarDescription
 import json
-from libs import normalize_angle
+from libs import normalize_angle, latlon2xyz
+from search import Graph, a_star_search, reconstruct_path
+from shapely.geometry import LineString
 
 
 class Simulation:
@@ -223,7 +225,7 @@ class Simulation:
         plt.show()
 
 
-    def simulate(self, cx, cy, cyaw, sp, dt, initial_state, save_sim = True, name="sim"):
+    def simulate(self, cx, cy, cyaw, sp, dt, initial_state, save_sim = False, name="sim"):
         self.goal = [cx[-1], cy[-1]]
 
         state = initial_state
@@ -252,7 +254,8 @@ class Simulation:
 
         cyaw = smooth_yaw(cyaw)
 
-        while 100.0 >= time:
+        while 50.0 >= time:
+            print(time)
             xref, target_ind, dref = self.mpc.calc_ref_trajectory(state, cx, cy, cyaw, sp, dt, target_ind)
 
             x0 = [state.x, state.y, state.v, state.yaw]  # current state
@@ -282,6 +285,7 @@ class Simulation:
                 print("Goal")
                 break
 
+        print("sim finished")
         sim_data = {
             "cx": cx,
             "cy": cy,
@@ -325,25 +329,36 @@ if __name__ == "__main__":
     mpc = MPC(car_desc)
     sim = Simulation(mpc)
 
-    name = "a_star_waypoints"
-    with open(f'../data/sat_scale.csv', newline='') as f:
-        rows = list(csv.reader(f, delimiter=','))
-    width = float(rows[0][0])
-    height = float(rows[0][1])
+    name = "test"
 
     calc_sim = True
     if calc_sim:
-        with open(f'../data/{name}.csv', newline='') as f:
-            rows = list(csv.reader(f, delimiter=','))
-        px, py = [[float(i) for i in row] for row in zip(*rows[1:])]
+        with open('../logs/airport_test.json') as file:
+            data = json.load(file)
 
+        graph = Graph.from_dict(data)
+
+        goal = graph.get_node_from_name("51")
+
+        came_from, cost_so_far = a_star_search(graph, graph.nodes[0], goal)
+        path = reconstruct_path(came_from, graph.nodes[0], goal)
+
+        n = 100
+        line = LineString(list(map(lambda x: x.pos, path)))
+        distances = np.linspace(0, line.length, n)
+        points = [line.interpolate(distance) for distance in distances]
+        xyz = [latlon2xyz(point.x, point.y) for point in points]
+
+        px = [x[0] for x in xyz]
+        py = [y[1] for y in xyz]
+        sim.mpc.dt = 0.05
         cx, cy, cyaw, ccur = interpolate_cubic_spline(px, py, step=sim.mpc.dt)
         sp = mpc.calc_speed_profile(cx, cy, cyaw, ccur, mpc.TARGET_SPEED)
         initial_state = State(x=cx[0], y=cy[0], yaw=90, v=0.0)
-
-        sim.simulate(cx, cy, cyaw, sp, sim.mpc.dt, initial_state, name=name)
+        print("running sim")
+        sim.simulate(cx, cy, cyaw, sp, sim.mpc.dt, initial_state, save_sim=False, name=name)
 
     data = sim.dict_from_json(f"../data/{name}.json")
-    sim.create_animation(data, "../images/sat_img.png", (width, height))
+    sim.create_animation(data)
 
 

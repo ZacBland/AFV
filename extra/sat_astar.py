@@ -111,13 +111,6 @@ for edge in graph.edges:
     lines[frozenset({edges[0],edges[1]})] = line[0]
 
 
-sat = Image.open("../../images/sat_img.PNG")
-width, height = sat.size
-
-sat = sat.resize((int(width*horizontal_scale_factor), int(height*vertical_scale_factor)))
-
-plt.imshow(sat, origin="lower")
-
 START = t13
 GOAL = c1
 came_from, cost_so_far = a_star_search(graph, START, GOAL)

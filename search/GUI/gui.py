@@ -36,7 +36,7 @@ class Window:
         buttons = []
 
         #load_file = "../../logs/airport_test.json"
-        save_file = "../../logs/test.json"
+        save_file = "./logs/test.json"
 
         def load_file():
             filename = filedialog.askopenfilename(initialdir = "../../logs/",
@@ -63,8 +63,8 @@ class Window:
                             path_dict[key] = path
                             connection_list.append(key)
 
-        red = ImageTk.PhotoImage(Image.open("red.png").resize((15, 15)))
-        green = ImageTk.PhotoImage(Image.open("green.png").resize((15, 15)))
+        red = ImageTk.PhotoImage(Image.open("./search/GUI/red.png").resize((15, 15)))
+        green = ImageTk.PhotoImage(Image.open("./search/GUI/red.png").resize((15, 15)))
 
         self.current_command = None
         default_color = None
