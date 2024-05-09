@@ -9,11 +9,9 @@ from libs.cubic_interpolation import interpolate_cubic_spline
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
 import csv
-import math
 from libs.defines import *
 from libs.car_description import CarDescription
-import logging
-import codecs, json
+import json
 from libs import normalize_angle
 
 
