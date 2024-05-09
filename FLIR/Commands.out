@@ -1,0 +1,655 @@
+    1  ls code*
+    2  sudo apt install code*
+    3  ls
+    4  sudo gdebi
+    5  sudo apt install gdebi
+    6  sudo gdebi code*
+    7  sudo apt install git
+    8  ls
+    9  git clone https://github.com/ZacBland/AFV.git
+   10  gi
+   11  git
+   12  cd ..
+   13  git clone [200~https://github.com/ZacBland/AFV.git~
+   14  git clone https://github.com/ZacBland/AFV.git
+   15  git clone git@github.com:ZacBland/AFV.git
+   16  git config --global user.name "AFV"
+   17  git config --global user.email "zacbland@outlook.com"
+   18  git clone git@github.com:ZacBland/AFV.git
+   19  git clone https://github.com/ZacBland/AFV.git
+   20  ls
+   21  cd AFV
+   22  ls
+   23  sudo apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6
+   24  conda create -n capstone python=3.9.*
+   25  conda activate capstone 
+   26  ls
+   27  wine FLIR\ IRMonitor.exe 
+   28  arp -a
+   29  sudo apt install net-tools
+   30  arp -a
+   31  wine setup.exe 
+   32  python setup.py 
+   33  sudo dpkg --add-architecture i386 
+   34  sudo mkdir -pm755 /etc/apt/keyrings
+   35  sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+   36  sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/mantic/winehq-mantic.sources
+   37  sudo apt update && sudo apt install --install-recommends winehq-stable
+   38  sudo apt install nmap 
+   39  vncserver 
+   40  ps -ef | grep vnc
+   41  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/simulate.py
+   42  /home/afv/anaconda3/envs/capstone/bin/python
+   43  pip install scipy
+   44  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/simulate.py
+   45  pip install cvxpy
+   46  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/simulate.py
+   47  python mpc/simulate.py 
+   48  cd mpc
+   49  python mpc/simulate.py 
+   50  python simulate.py 
+   51  cd ..
+   52  python mpc/simulate.py 
+   53  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/simulate.py
+   54  python mpc/simulate.py -m
+   55  python mpc/simulate.py
+   56  python ./mpc/simulate.py
+   57  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/test.py
+   58  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/simulate.py
+   59  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/mpc.py
+   60  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/simulate.py
+   61  python ./mpc/simulate.py
+   62  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/test.py
+   63  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/test.py
+   64  python ./mpc/simulate.py
+   65  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/mpc/test.py
+   66  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/simulate.py
+   67  python simulate.py
+   68  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/simulate.py
+   69  pip install shapely
+   70  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/simulate.py
+   71  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/tests/lib_tests.py
+   72  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/simulate.py
+   73  git checkout flir 
+   74  pip install flirpy 
+   75  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/flir.py
+   76  /bin/python3 /home/afv/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/afv/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+   77  pip install matplotlib csv math logging libs
+   78  pip install matplotlib csv math logging
+   79  pip install matplotlib 
+   80  ls
+   81  ls |grep .sh
+   82  sudo ./vncinstall 
+   83  systemctl enable vncserver-virtuald.service 
+   84  systemctl start vncserver-virtuald.service 
+   85  systemctl status vncserver-virtuald.service 
+   86  ls
+   87  ifconfig 
+   88  sh ./shutdown_script.sh 
+   89  sudo apt install send 
+   90  sh ./shutdown_script.sh 
+   91  yes
+   92  spawn ssh pi@10.42.0.75 ls
+   93  expect "password:"
+   94  send "raspberry\n"
+   95  ssh pi@10.42.0.75 ls
+   96  sh ./shutdown_script.sh 
+   97  ssh pi@10.42.0.33 ls
+   98  sh ./shutdown_script.sh 
+   99  ssh pi@10.42.0.75 python servo3.py 0 90
+  100  ssh pi@10.42.0.75 ls
+  101  ssh pi@10.42.0.75 python servo3.py 0 180
+  102  ssh pi@10.42.0.75 python servo3.py 2 180
+  103  ssh pi@10.42.0.75 python servo3.py 1 100
+  104  ssh pi@10.42.0.75 python servo3.py 1 0
+  105  ssh pi@10.42.0.75 python servo3.py 1 90
+  106  ssh-keygen 
+  107  ssh pi@10.42.0.75 python servo3.py 1 90
+  108  ssh-copy-id -i ~/.ssh/id_rsa 10.42.0.75
+  109  ssh pi@10.42.0.75 python servo3.py 1 90
+  110  ssh-copy-id -i ~/.ssh/id_rsa 10.42.0.75
+  111  ssh-copy-id -i ~/.ssh/id_rsa pi@10.42.0.75
+  112  ssh pi@10.42.0.75 python servo3.py 1 90
+  113  ssh pi@10.42.0.75 python servo3.py 2 180
+  114  ssh pi@10.42.0.75 python servo3.py 2 90
+  115  ssh pi@10.42.0.75 python servo3.py 0 90
+  116  ssh pi@10.42.0.75 python servo3.py 0 100
+  117  ssh pi@10.42.0.75 python servo3.py 0 90
+  118  ssh pi@10.42.0.75 python servo3.py 1 110
+  119  ssh pi@10.42.0.75 python servo3.py 0 90
+  120  ssh pi@10.42.0.75 python servo3.py 1 90
+  121  ssh pi@10.42.0.75 python servo3.py 1 100
+  122  ssh pi@10.42.0.75 python servo3.py 1 105
+  123  ssh pi@10.42.0.75 python servo3.py 1 90
+  124  ssh pi@10.42.0.75 python servo3.py 1 105
+  125  ssh pi@10.42.0.75 python servo3.py 1 90
+  126  ssh pi@10.42.0.75 python servo3.py 1 105
+  127  ssh pi@10.42.0.75 python servo3.py 1 90
+  128  ssh pi@10.42.0.75 python servo3.py 1 30
+  129  ssh pi@10.42.0.75 python servo3.py 1 90
+  130  ssh pi@10.42.0.75 python servo3.py 1 30
+  131  ssh pi@10.42.0.75 python servo3.py 1 105
+  132  ssh pi@10.42.0.75 python servo3.py 1 90
+  133  ssh pi@10.42.0.75 python servo3.py 1 105
+  134  ssh pi@10.42.0.75 python servo3.py 1 90
+  135  ssh pi@10.42.0.75 python servo3.py 1 30
+  136  ssh pi@10.42.0.75 python servo3.py 1 90
+  137  ssh pi@10.42.0.75 python servo3.py 1 60
+  138  ssh pi@10.42.0.75 python servo3.py 1 90
+  139  ssh pi@10.42.0.75 python servo3.py 1 105
+  140  ssh pi@10.42.0.75 python servo3.py 1 150
+  141  ssh pi@10.42.0.75 python servo3.py 1 90
+  142  ssh pi@10.42.0.75 python servo3.py 1 80
+  143  ssh pi@10.42.0.75 python servo3.py 1 90
+  144  ssh pi@10.42.0.75 python servo3.py 1 80
+  145  ssh pi@10.42.0.75 python servo3.py 1 90
+  146  ssh pi@10.42.0.75 python servo3.py 1 30
+  147  ssh pi@10.42.0.75 python servo3.py 1 150
+  148  ssh pi@10.42.0.75 python servo3.py 1 90
+  149  ssh pi@10.42.0.75 python servo3.py 1 100
+  150  ssh pi@10.42.0.75 python servo3.py 1 80
+  151  ssh pi@10.42.0.75 python servo3.py 1 90
+  152  ssh pi@10.42.0.75 python servo3.py 1 80
+  153  ssh pi@10.42.0.75 python servo3.py 1 90
+  154  ssh pi@10.42.0.75 python servo3.py 1 100
+  155  ssh pi@10.42.0.75 python servo3.py 1 120
+  156  ssh pi@10.42.0.75 python servo3.py 1 60
+  157  ssh pi@10.42.0.75 python servo3.py 1 90
+  158  ssh-copy-id -i ~/.ssh/id_rsa pi@10.42.0.33
+  159  ssh-copy-id -i ~/.ssh/id_rsa pi@10.42.0.66
+  160  ssh-copy-id -i ~/.ssh/id_rsa pi@10.42.0.78
+  161  ls
+  162  cd Desktop/
+  163  sh ./shutdown_script.sh 
+  164  ssh pi@10.42.0.75 python servo3.py 0 90
+  165  ssh pi@10.42.0.75 python servo3.py 0 150
+  166  ssh pi@10.42.0.75 python servo3.py 0 30
+  167  ssh pi@10.42.0.75 python servo3.py 0 90
+  168  ssh pi@10.42.0.75 python servo3.py 0 110
+  169  ssh pi@10.42.0.75 python servo3.py 0 90
+  170  ssh pi@10.42.0.75 python servo3.py 1 100
+  171  ssh pi@10.42.0.75 python servo3.py 1 90
+  172  ssh pi@10.42.0.75 python servo3.py 0 150
+  173  ssh pi@10.42.0.75 python servo3.py 1 90
+  174  ssh pi@10.42.0.75 python servo3.py 0 10
+  175  ssh pi@10.42.0.75 python servo3.py 0 90
+  176  ssh pi@10.42.0.75 python servo3.py 0 100
+  177  ssh pi@10.42.0.75 python servo3.py 0 90
+  178  ssh pi@10.42.0.75 python servo3.py 1 100
+  179  ssh pi@10.42.0.75 python servo3.py 0 90
+  180  ssh pi@10.42.0.75 python servo3.py 1 90
+  181  ssh pi@10.42.0.75 python servo3.py 1 100
+  182  ssh pi@10.42.0.75 python servo3.py 1 90 
+  183  ssh pi@10.42.0.75 python servo3.py 0 90 & python servo3.py 1 90
+  184  ssh pi@10.42.0.75 pwd
+  185  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  186  ssh pi@10.42.0.75 python servo3.py 0 80 & ssh pi@10.42.0.75 python servo3.py 1 100
+  187  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  188  ssh pi@10.42.0.75 python servo3.py 0 100 & ssh pi@10.42.0.75 python servo3.py 1 80
+  189  ssh pi@10.42.0.75 python servo3.py 0 80 & ssh pi@10.42.0.75 python servo3.py 1 100
+  190  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  191  sh motor_control.sh 
+  192  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  193  sh motor_control.sh 
+  194  touch bash_control.py
+  195  sh motor_control.sh 
+  196  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  197  ssh pi@10.42.0.75 python servo3.py 0 70 & ssh pi@10.42.0.75 python servo3.py 1 110
+  198  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 150
+  199  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  200  python bash_control.py 
+  201  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/Desktop/bash_control.py
+  202  /bin/python3 /home/afv/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/printEnvVariablesToFile.py /home/afv/.vscode/extensions/ms-python.python-2024.0.1/pythonFiles/deactivate/bash/envVars.txt
+  203  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/FLIR/camera_stream.py
+  204  pip install requests
+  205  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/FLIR/camera_stream.py
+  206  pip install onvif-zeep
+  207  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/FLIR/onvif_stream.py
+  208  pip install torch torchvision
+  209  /home/afv/anaconda3/envs/capstone/bin/python /home/afv/AFV/FLIR/model_test.py
+  210  cd FLIR/
+  211  python model_test.py 
+  212  conda deactivate 
+  213  conda create -n flir python=3.9.*
+  214  conda activate flir 
+  215  pip install super_gradients 
+  216  pip install opencv-python onvif-zeep
+  217  python model_test.py 
+  218  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/onvif_stream.py
+  219  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/model_test.py
+  220  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/onvif_stream.py
+  221  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/mutlicase_stream.py
+  222  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/onvif_stream.py
+  223  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/mutlicase_stream.py
+  224  sudo arp-scan -l --interface=eth0
+  225  sudo apt install arp-scan 
+  226  sudo arp-scan -l --interface=eth0
+  227  ifconfig 
+  228  sudo arp-scan -l --interface=enp1s0
+  229  sudo apt ssh 
+  230  sudo apt install ssh 
+  231  ssh help
+  232  ssh pi@alphapi shutdown 
+  233  ls
+  234  sudo arp-scan -l --interface=enp1s0
+  235  ssh pi@10.42.0.75 shutdown 
+  236  ssh pi@10.42.0.75 sudo shutdown -H 
+  237  sudo arp-scan -l --interface=enp1s0
+  238  ssh pi@10.42.0.75 ls
+  239  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  240  ssh pi@10.42.0.75 python servo3.py 1 160
+  241  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  242  ssh pi@10.42.0.75 python servo3.py 1 160
+  243  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  244  ssh pi@10.42.0.75 python servo3.py 1 160
+  245  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  246  ssh pi@10.42.0.75 python servo3.py 1 160
+  247  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  248  ssh pi@10.42.0.75 python servo3.py 1 90
+  249  ssh pi@10.42.0.75 python servo3.py 1 150
+  250  ssh pi@10.42.0.75 python servo3.py 1 30
+  251  ssh pi@10.42.0.75 python servo3.py 1 90
+  252  ssh pi@10.42.0.75 python servo3.py 1 100
+  253  ssh pi@10.42.0.75 python servo3.py 1 150
+  254  ssh pi@10.42.0.75 python servo3.py 1 90
+  255  ssh pi@10.42.0.75 python servo3.py 1 120
+  256  ssh pi@10.42.0.75 python servo3.py 1 90
+  257  ssh pi@10.42.0.75 python servo3.py 1 105
+  258  ssh pi@10.42.0.75 python servo3.py 1 110
+  259  ssh pi@10.42.0.75 python servo3.py 1 90
+  260  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  261  ssh pi@10.42.0.75 python servo3.py 0 30 & ssh pi@10.42.0.75 python servo3.py 1 110
+  262  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  263  ssh pi@10.42.0.75 python servo3.py 0 30 & ssh pi@10.42.0.75 python servo3.py 1 120
+  264  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  265  cd Desktop/
+  266  sh shutdown_script.sh 
+  267  ls
+  268  ssh pi@10.42.0.75 python servo3.py 1 90
+  269  ssh pi@10.42.0.75 python servo3.py 1 150
+  270  ssh pi@10.42.0.75 python servo3.py 1 30
+  271  ssh pi@10.42.0.75 python servo3.py 1 90
+  272  ssh pi@10.42.0.75 python servo3.py 1 95
+  273  ssh pi@10.42.0.75 python servo3.py 1 90
+  274  ssh pi@10.42.0.75 python servo3.py 1 85
+  275  ssh pi@10.42.0.75 python servo3.py 1 90
+  276  ssh pi@10.42.0.75 python servo3.py 1 85
+  277  ssh pi@10.42.0.75 python servo3.py 1 90
+  278  ssh pi@10.42.0.75 python servo3.py 1 100
+  279  ssh pi@10.42.0.75 python servo3.py 1 90
+  280  ssh pi@10.42.0.75 python servo3.py 1 100
+  281  ssh pi@10.42.0.75 python servo3.py 1 90
+  282  ssh pi@10.42.0.75 python servo3.py 1 105
+  283  ssh pi@10.42.0.75 python servo3.py 1 90
+  284  ssh pi@10.42.0.75 python servo3.py 1 150
+  285  ssh pi@10.42.0.75 python servo3.py 1 90
+  286  ssh pi@10.42.0.75 python servo3.py 1 85
+  287  ssh pi@10.42.0.75 python servo3.py 1 90
+  288  ssh pi@10.42.0.75 python servo3.py 1 100
+  289  ssh pi@10.42.0.75 python servo3.py 1 90
+  290  ssh pi@10.42.0.75 python servo3.py 1 95
+  291  ssh pi@10.42.0.75 python servo3.py 1 100
+  292  ssh pi@10.42.0.75 python servo3.py 1 90
+  293  ssh pi@10.42.0.75 python servo3.py 1 100
+  294  ssh pi@10.42.0.75 python servo3.py 1 90
+  295  ssh pi@10.42.0.75 python servo3.py 1 105
+  296  ssh pi@10.42.0.75 python servo3.py 1 90
+  297  ssh pi@10.42.0.75 python servo3.py 1 120
+  298  ssh pi@10.42.0.75 python servo3.py 1 90
+  299  ssh pi@10.42.0.75 python servo3.py 1 120
+  300  ssh pi@10.42.0.75 python servo3.py 1 90
+  301  ssh pi@10.42.0.75 python servo3.py 1 120
+  302  ssh pi@10.42.0.75 python servo3.py 1 90
+  303  ssh pi@10.42.0.75 python servo3.py 1 120
+  304  ssh pi@10.42.0.75 python servo3.py 1 90
+  305  ssh pi@10.42.0.75 python servo3.py 1 120
+  306  ssh pi@10.42.0.75 python servo3.py 1 90
+  307  ssh pi@10.42.0.75 python servo3.py 1 120
+  308  ssh pi@10.42.0.75 python servo3.py 1 90
+  309  ssh pi@10.42.0.75 python servo3.py 1 125
+  310  ssh pi@10.42.0.75 python servo3.py 1 90
+  311  ssh pi@10.42.0.75 python servo3.py 1 125
+  312  ssh pi@10.42.0.75 python servo3.py 1 90
+  313  ssh pi@10.42.0.75 python servo3.py 1 100
+  314  ssh pi@10.42.0.75 python servo3.py 1 125
+  315  ssh pi@10.42.0.75 python servo3.py 1 100
+  316  ssh pi@10.42.0.75 python servo3.py 1 90
+  317  ssh pi@10.42.0.75 python servo3.py 1 100
+  318  ssh pi@10.42.0.75 python servo3.py 1 90
+  319  ssh pi@10.42.0.75 python servo3.py 1 100
+  320  ssh pi@10.42.0.75 python servo3.py 1 90
+  321  ssh pi@10.42.0.75 python servo3.py 1 100
+  322  ssh pi@10.42.0.75 python servo3.py 1 90
+  323  ssh pi@10.42.0.75 python servo3.py 1 150
+  324  ssh pi@10.42.0.75 python servo3.py 1 30
+  325  ssh pi@10.42.0.75 python servo3.py 1 90
+  326  ssh pi@10.42.0.75 python servo3.py 1 110
+  327  ssh pi@10.42.0.75 python servo3.py 1 90
+  328  ssh pi@10.42.0.75 python servo3.py 1 110
+  329  ssh pi@10.42.0.75 python servo3.py 1 120
+  330  ssh pi@10.42.0.75 python servo3.py 1 150
+  331  ssh pi@10.42.0.75 python servo3.py 1 90
+  332  ssh pi@10.42.0.75 python servo3.py 1 120
+  333  ssh pi@10.42.0.75 python servo3.py 1 90
+  334  ssh pi@10.42.0.75 python servo3.py 1 120
+  335  ssh pi@10.42.0.75 python servo3.py 1 150
+  336  ssh pi@10.42.0.75 python servo3.py 1 90
+  337  ssh pi@10.42.0.75 python servo3.py 1 150
+  338  ssh pi@10.42.0.75 python servo3.py 1 90
+  339  ssh pi@10.42.0.75 python servo3.py 1 110
+  340  ssh pi@10.42.0.75 python servo3.py 1 90
+  341  ssh pi@10.42.0.75 python servo3.py 1 130
+  342  ssh pi@10.42.0.75 python servo3.py 1 90
+  343  ssh pi@10.42.0.75 python servo3.py 1 130
+  344  ssh pi@10.42.0.75 python servo3.py 1 90
+  345  ssh pi@10.42.0.75 python servo3.py 1 150
+  346  ssh pi@10.42.0.75 python servo3.py 1 90
+  347  ssh pi@10.42.0.75 python servo3.py 1 150
+  348  ssh pi@10.42.0.75 python servo3.py 1 90
+  349  ssh pi@10.42.0.75 python servo3.py 1 130
+  350  ssh pi@10.42.0.75 python servo3.py 1 70
+  351  ssh pi@10.42.0.75 python servo3.py 1 130
+  352  ssh pi@10.42.0.75 python servo3.py 1 80
+  353  ssh pi@10.42.0.75 python servo3.py 1 85
+  354  ssh pi@10.42.0.75 python servo3.py 1 90
+  355  ssh pi@10.42.0.75 python servo3.py 1 110
+  356  ssh pi@10.42.0.75 python servo3.py 1 90
+  357  ssh pi@10.42.0.75 python servo3.py 1 110
+  358  ssh pi@10.42.0.75 python servo3.py 1 120
+  359  ssh pi@10.42.0.75 python servo3.py 1 150
+  360  ssh pi@10.42.0.75 python servo3.py 1 90
+  361  ssh pi@10.42.0.75 python servo3.py 1 150
+  362  ssh pi@10.42.0.75 python servo3.py 1 90
+  363  ssh pi@10.42.0.75 python servo3.py 1 150
+  364  ssh pi@10.42.0.75 python servo3.py 1 90
+  365  ssh pi@10.42.0.75 python servo3.py 0 90
+  366  ssh pi@10.42.0.75 python servo3.py 0 150
+  367  ssh pi@10.42.0.75 python servo3.py 0 30
+  368  ssh pi@10.42.0.75 python servo3.py 0 90
+  369  ssh pi@10.42.0.75 python servo3.py 0 30
+  370  ssh pi@10.42.0.75 python servo3.py 0 150
+  371  ssh pi@10.42.0.75 python servo3.py 0 90
+  372  ssh pi@10.42.0.75 python servo3.py 0 120
+  373  ssh pi@10.42.0.75 python servo3.py 0 90
+  374  ssh pi@10.42.0.75 python servo3.py 0 120
+  375  ssh pi@10.42.0.75 python servo3.py 0 90
+  376  ssh pi@10.42.0.75 python servo3.py 0 120
+  377  ssh pi@10.42.0.75 python servo3.py 0 90
+  378  ssh pi@10.42.0.75 python servo3.py 0 120
+  379  ssh pi@10.42.0.75 python servo3.py 0 90
+  380  ssh pi@10.42.0.75 python servo3.py 0 120
+  381  ssh pi@10.42.0.75 python servo3.py 0 90
+  382  ssh pi@10.42.0.75 python servo3.py 0 150
+  383  ssh pi@10.42.0.75 python servo3.py 0 90
+  384  ssh pi@10.42.0.75 python servo3.py 1 120
+  385  ssh pi@10.42.0.75 python servo3.py 0 90
+  386  ssh pi@10.42.0.75 python servo3.py 1 0
+  387  ssh pi@10.42.0.75 python servo3.py 1 90
+  388  ssh pi@10.42.0.75 python servo3.py 1 120
+  389  ssh pi@10.42.0.75 python servo3.py 1 90
+  390  ssh pi@10.42.0.75 python servo3.py 0 120
+  391  ssh pi@10.42.0.75 python servo3.py 0 90
+  392  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  393  ssh pi@10.42.0.75 python servo3.py 0 120 & ssh pi@10.42.0.75 python servo3.py 1 120
+  394  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  395  ssh pi@10.42.0.75 python servo3.py 0 120 & ssh pi@10.42.0.75 python servo3.py 1 120
+  396  ssh pi@10.42.0.75 python servo3.py 0 90 & ssh pi@10.42.0.75 python servo3.py 1 90
+  397  sh shutdown_script.sh 
+  398  cat shutdown_script.sh
+  399  touch shutdown_script.sh
+  400  gedit shutdown_script.sh 
+  401  sudo apt install gedit 
+  402  gedit shutdown_script.sh 
+  403  sudo apt install expect autoexpect
+  404  sudo apt install expect 
+  405  sudo apt update
+  406  sudo apt upgrade
+  407  sudo shutdown -r now
+  408  wine FLIR\ Tools.exe 
+  409  sudo apt update
+  410  sudo apt upgrade
+  411  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/mutlicase_stream.py
+  412  qq/home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/mutlicase_stream.py
+  413  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/mutlicase_stream.py
+  414  /home/afv/anaconda3/envs/flir/bin/python /home/afv/AFV/FLIR/onvif_stream.py
+  415  cd FLIR/
+  416  python heat.py 
+  417  /bin/python3 /home/afv/.vscode/extensions/ms-python.python-2024.2.0/pythonFiles/printEnvVariablesToFile.py /home/afv/.vscode/extensions/ms-python.python-2024.2.0/pythonFiles/deactivate/bash/envVars.txt
+  418  bluecherry
+  419  sudo apt install mpv libmpv-dev
+  420  sudo apt autoremove
+  421  sudo apt install mpv libmpv-dev
+  422  cd Downloads/
+  423  sudo dpkg -i bluecherry-linux-x86_64.deb
+  424  sudo apt install zoneminder 
+  425  zoneminder
+  426  sudo apt install zoneminder 
+  427  sudo apt install ZoneMinder 
+  428  sudo add-apt-repository ppa:iconnor/zoneminder-1.36
+  429  sudo apt update
+  430  sudo apt remove zoneminder
+  431  sudo add-apt-repository ppa:iconnor/zoneminder-1.36
+  432  sudo apt install build-essential libsdl2-dv
+  433  sudo apt install build-essential libsdl2-dev
+  434  sudo apt autoremove
+  435  cd ..
+  436  export ATLAS_C_SDK_DIR=/home/afv/atlas-c-sdk-linux-x64-2.1.2/
+  437  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ATLAS_C_SDK_DIR
+  438  sudo ldconfig
+  439  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  440  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample/sample
+  441  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  442  export ATLAS_C_SDK_DIR=/home/afv/atlas-c-sdk-linux-x64-2.1.2/sample/
+  443  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ATLAS_C_SDK_DIR
+  444  sudo ldconfig
+  445  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  446  export ATLAS_C_SDK_DIR=/home/afv/atlas-c-sdk-linux-x64-2.1.2/
+  447  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ATLAS_C_SDK_DIR
+  448  sudo ldconfig
+  449  sudo apt install gedit
+  450  gedit .bashrc 
+  451  sudo gedit .bashrc 
+  452  /bin/python3 /home/afv/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/printEnvVariablesToFile.py /home/afv/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/deactivate/bash/envVars.txt
+  453  echo $LD_LIBRARY_PATH 
+  454  sudo gedit .bashrc 
+  455  source .bashrc 
+  456  echo $LD_LIBRARY_PATH 
+  457  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  458  cd atlas-c-sdk-linux-x64-2.1.2/
+  459  cd sample/
+  460  ls
+  461  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o image_sample.c 
+  462  gcc image_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  463  ls
+  464  gcc network_camera_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  465  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  466  cd atlas-c-sdk-linux-x64-2.1.2/sample/
+  467  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  468  echo LD_LIBRARY_PATH
+  469  echo $LD_LIBRARY_PATH
+  470  echo %LD_LIBRARY_PATH%
+  471  echo $LD_LIBRARY_PATH
+  472  export ATLAS_C_SDK_DIR=/home/afv/atlas-c-sdk-linux-x64-2.1.2
+  473  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ATLAS_C_SDK_DIR
+  474  sudo ldconfig
+  475  echo $LD_LIBRARY_PATH
+  476  gcc sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  477  sample
+  478  ls
+  479  ./sample 
+  480  sudo ldconfig
+  481  echo $LD_LIBRARY_PATH
+  482  echo $ATLAS_C_SDK_DIR 
+  483  gcc network_camera_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  484  ./sample 
+  485  gcc network_camera_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sample
+  486  cd $ATLAS_C_SDK_DIR/lib
+  487  cd..
+  488  cd ..
+  489  ip link show
+  490  ifconfig -a
+  491  ssh pi@10.42.0.75 python servo3.py 3 0
+  492  ssh pi@10.42.0.75 python servo3.py 3 20
+  493  ssh pi@10.42.0.75 python servo3.py 3 40
+  494  ssh pi@10.42.0.75 python servo3.py 3 90
+  495  ssh pi@10.42.0.75 python servo3.py 3 120
+  496  ssh pi@10.42.0.75 python servo3.py 3 150
+  497  ssh pi@10.42.0.75 python servo3.py 3 0
+  498  ssh pi@10.42.0.75 python servo3.py 3 90
+  499  ssh pi@10.42.0.75 python servo3.py 3 70
+  500  ssh pi@10.42.0.75 python servo3.py 3 100
+  501  ssh pi@10.42.0.75 python servo3.py 3 105
+  502  ssh pi@10.42.0.75 python servo3.py 3 106
+  503  ssh pi@10.42.0.75 python servo3.py 3 104
+  504  ssh pi@10.42.0.75 python servo3.py 3 90
+  505  ssh pi@10.42.0.75 python servo3.py 3 75
+  506  ssh pi@10.42.0.75 python servo3.py 3 74
+  507  ssh pi@10.42.0.75 python servo3.py 3 73
+  508  ssh pi@10.42.0.75 python servo3.py 3 72
+  509  ssh pi@10.42.0.75 python servo3.py 3 71
+  510  ssh pi@10.42.0.75 python servo3.py 3 104
+  511  ssh pi@10.42.0.75 python servo3.py 3 71
+  512  ssh pi@10.42.0.75 python servo3.py 3 130
+  513  ssh pi@10.42.0.75 python servo3.py 3 137
+  514  ssh pi@10.42.0.75 python servo3.py 3 136
+  515  ssh pi@10.42.0.75 python servo3.py 3 133
+  516  ssh pi@10.42.0.75 python servo3.py 3 104
+  517  ssh pi@10.42.0.75 python servo3.py 3 135
+  518  ssh pi@10.42.0.75 python servo3.py 3 137
+  519  ssh pi@10.42.0.75 python servo3.py 3 104
+  520  ssh pi@10.42.0.75 python servo3.py 3 104.5
+  521  ssh pi@10.42.0.75 python servo3.py 3 104
+  522  ssh pi@10.42.0.75 python servo3.py 3 137
+  523  ssh pi@10.42.0.75 python servo3.py 3 71
+  524  ssh pi@10.42.0.75 python servo3.py 3 137
+  525  ssh pi@10.42.0.75 python servo3.py 3 71
+  526  ssh pi@10.42.0.75 python servo3.py 3 137
+  527  ssh pi@10.42.0.75 python servo3.py 3 71
+  528  ssh pi@10.42.0.75 python servo3.py 3 137
+  529  ssh pi@10.42.0.75 python servo3.py 3 71
+  530  ssh pi@10.42.0.75 python servo3.py 3 137
+  531  ssh pi@10.42.0.75 python servo3.py 3 100
+  532  ssh pi@10.42.0.75 python servo3.py 3 101
+  533  ssh pi@10.42.0.75 python servo3.py 3 120
+  534  ssh pi@10.42.0.75 python servo3.py 3 125
+  535  ssh pi@10.42.0.75 python servo3.py 3 104
+  536  ssh pi@10.42.0.75 python servo3.py 3 105
+  537  ssh pi@10.42.0.75 python servo3.py 3 106
+  538  ssh pi@10.42.0.75 python servo3.py 4 90
+  539  ssh pi@10.42.0.75 python servo3.py 4 30
+  540  ssh pi@10.42.0.75 python servo3.py 4 20
+  541  ssh pi@10.42.0.75 python servo3.py 4 10
+  542  ssh pi@10.42.0.75 python servo3.py 4 0
+  543  ssh pi@10.42.0.75 python servo3.py 4 -5
+  544  ssh pi@10.42.0.75 python servo3.py 4 50
+  545  ssh pi@10.42.0.75 python servo3.py 4 90
+  546  ssh pi@10.42.0.75 python servo3.py 4 120
+  547  ssh pi@10.42.0.75 python servo3.py 4 150
+  548  ssh pi@10.42.0.75 python servo3.py 4 200
+  549  ssh pi@10.42.0.75 python servo3.py 4 190
+  550  ssh pi@10.42.0.75 python servo3.py 4 180
+  551  ssh pi@10.42.0.75 python servo3.py 4 0
+  552  ssh pi@10.42.0.75 python servo3.py 4 180
+  553  ssh pi@10.42.0.75 python servo3.py 4 90
+  554  ssh pi@10.42.0.75 python servo3.py 4 180
+  555  ssh pi@10.42.0.75 python servo3.py 4 0
+  556  ssh pi@10.42.0.75 python servo3.py 4 90
+  557  ssh pi@10.42.0.75 python servo3.py 4 92
+  558  ssh pi@10.42.0.75 python servo3.py 4 952
+  559  ssh pi@10.42.0.75 python servo3.py 4 95
+  560  ssh pi@10.42.0.75 python servo3.py 4 100
+  561  ssh pi@10.42.0.75 python servo3.py 4 102
+  562  ssh pi@10.42.0.75 python servo3.py 4 105
+  563  ssh pi@10.42.0.75 python servo3.py 4 103
+  564  ssh pi@10.42.0.75 python servo3.py 4 100
+  565  ssh pi@10.42.0.75 python servo3.py 4 0
+  566  ssh pi@10.42.0.75 python servo3.py 4 105
+  567  ls
+  568  lsls
+  569  #
+  570  4054037667
+  571  ssh pi@10.42.0.75 python relay.py
+  572  conda activate flir 
+  573  python setup.py 
+  574  python setup.py --help
+  575  python setup.py install 
+  576  python setup.py build
+  577  pip install FileSDK
+  578  sudo apt install libfnv-dev
+  579  sudo apt install libfnv
+  580  cd ..
+  581  pip install python/setup.py 
+  582  python ./python/setup.py 
+  583  cd ..
+  584  cd ~/Downloads/
+  585  cd FLIR_Science_File_SDK_5.0.1_linux-x86_64/
+  586  ./FLIRScienceFileSDK-5.0.1+26-linux-x86_64.run 
+  587  sudo ./FLIRScienceFileSDK-5.0.1+26-linux-x86_64.run 
+  588  cd atlas-c-sdk-linux-x64-2.1.2/
+  589  cd sample/
+  590  echo $ATLAS_C_SDK_DIR 
+  591  gcc network_camera_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o network
+  592  ls
+  593  ./network 
+  594  cd ..
+  595  sudo gedit .bashrc 
+  596  source .bashrc
+  597  cd atlas-c-sdk-linux-x64-2.1.2/sample/
+  598  gcc network_camera_sample.cimage include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o network
+  599  ./network 
+  600  gcc image_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o image
+  601  ./image 
+  602  ./image -help
+  603  ./image --help
+  604  gcc stream_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o stream
+  605  ./stream 
+  606  ./network 
+  607  gcc sequence_sample.c -I$ATLAS_C_SDK_DIR/include -L$ATLAS_C_SDK_DIR/lib -latlas_c_sdk -o sequence
+  608  ./sequence 
+  609  ./sequence --help
+  610  ./sequence --mode 0 
+  611  ls
+  612  ./sequence --mode=0 
+  613  ls
+  614  ./sequence --mode=0 --file ./stream
+  615  ./sequence --mode=0 --file=./stream
+  616  ./image
+  617  ./image --help
+  618  ./image --area 
+  619  ./image --area ./image.tiff
+  620  ./stream --help 
+  621  ./stream --record
+  622  ./stream --thermal --record
+  623  ./stream --thermal 
+  624  ./stream --thermal --record
+  625  python .\scripts\split_seq -o ./tiff -i thermal_recording.seq --export_raw 
+  626  python ./scripts/split_seq -o ./tiff -i thermal_recording.seq --export_raw 
+  627  python split_seqs -o ./tiff -i thermal_recording.seq --export_raw 
+  628  sudo python split_seqs -o ./tiff -i thermal_recording.seq --export_raw 
+  629  python split_seqs -o ./tiff -i thermal_recording.seq --export_raw 
+  630  python split_seqs -o ./tiff/ -i thermal_recording.seq --export_raw 
+  631  python split_seqs.py -o ./tiff/ -i thermal_recording.seq --export_raw 
+  632  python split_seqs.py -o ./tiff/ -i thermal_recording.seq
+  633  /bin/python3 /home/afv/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/printEnvVariablesToFile.py /home/afv/.vscode/extensions/ms-python.python-2024.2.1/pythonFiles/deactivate/bash/envVars.txt
+  634  cd FLIR/
+  635  python onvif_stream.py 
+  636  pip install flirpy 
+  637  python .\scripts\split_seqs -h
+  638  usage: split_seqs [-h] [-o OUTPUT] [-i INPUT] [-v VERBOSITY]
+  639  Split all files in folder
+  640  optional arguments:
+  641  python .\scripts\split_seqs -h
+  642  python ./scripts/split_seqs -h
+  643  conda env list
+  644  conda activate flir
+  645  ls
+  646  ./stream --help 
+  647  cd FLIR/
+  648  cd ..
+  649  ls
+  650  cd AFV
+  651  ls
+  652  cd FLIR
+  653  ls
+  654  history
+  655  history >> Commands.out
