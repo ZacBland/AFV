@@ -10,6 +10,8 @@
 	FLIR Body: Servo 7
 
                 N  O  T  E! IMPORTANT
+MAKE SURE on-board beelink is connected to eduroam wifi (defaults to guest and never connects)
+AWS MODEM CAN NEVER CONNECT TO EDUROAM
 Files such as "servo3.py" (from "Pi" folder) are called via ssh commands from the beelink, which has the FLIR operations and data for heat source detection
 *** SEE COMMANDS.OUT FILE TO VIEW HOW TO MOVE MULTIPLE SEVRVOS SIMULTANIOUSLY FROM COMMAND LINE ***
 The locaiton of these files is "home/AFV/FLIR" on the on-board Beelink computer.
